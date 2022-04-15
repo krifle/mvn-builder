@@ -1,6 +1,6 @@
 package com.zh.mvn.builder.server
 
-data class ServerInfoResponse(
+data class InfoResponse(
     val javaHomeList: List<JavaHome>,
     val mavenHomeList: List<MavenHome>
 )

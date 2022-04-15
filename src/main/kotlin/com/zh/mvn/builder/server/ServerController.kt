@@ -28,9 +28,9 @@ class ServerController {
         val javaHomeList = serverInitializer.getJavaHomeList()
         val mavenHomeList = serverInitializer.getMavenHomeList()
 
-        val serverInfoResult = ServerInfoResponse(javaHomeList, mavenHomeList)
+        val infoResponse = InfoResponse(javaHomeList, mavenHomeList)
 
-        return gson.toJson(serverInfoResult)
+        return gson.toJson(infoResponse)
     }
 
     @GetMapping(value = ["/handshake"], produces = [MediaType.APPLICATION_JSON_VALUE])
@@ -38,7 +38,8 @@ class ServerController {
     fun handshake(
         @RequestParam(required = false, defaultValue = "8") javaVersion: String,
         @RequestParam(required = false, defaultValue = "3.8.5") mavenVersion: String,
-        @RequestParam source: String
+        @RequestParam source: String,
+        @RequestParam buildOption: String
     ): String {
         // TODO 소스 checkout
         // TODO server 소켓 만들고 소켓 정보 돌려주기
