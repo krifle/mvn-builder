@@ -21,6 +21,8 @@ class ServerController {
 
     @Autowired
     private lateinit var serverInitializer: ServerInitializer
+    @Autowired
+    private lateinit var projectProperty: ProjectProperty
 
     @GetMapping(value = ["/info"], produces = [MediaType.APPLICATION_JSON_VALUE])
     @ResponseBody
@@ -39,10 +41,16 @@ class ServerController {
         @RequestParam(required = false, defaultValue = "8") javaVersion: String,
         @RequestParam(required = false, defaultValue = "3.8.5") mavenVersion: String,
         @RequestParam source: String,
-        @RequestParam buildOption: String
+        @RequestParam buildOpt: String
     ): String {
-        // TODO 소스 checkout
-        // TODO server 소켓 만들고 소켓 정보 돌려주기
-        return ""
+        val javaHome = projectProperty.getJavaHomeList().first { it.version == javaVersion }
+        val mavenHome = projectProperty.getMavenHomeList().first { it.version == mavenVersion }
+        val handshakeResponse = HandshakeProcessor(projectProperty).process(
+            javaHome = javaHome,
+            mavenHome = mavenHome,
+            source = source,
+            buildOpt = buildOpt
+        )
+        return gson.toJson(handshakeResponse)
     }
 }

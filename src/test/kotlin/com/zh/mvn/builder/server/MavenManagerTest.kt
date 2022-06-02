@@ -13,15 +13,6 @@ internal class MavenManagerTest {
     }
 
     @Test
-    fun `maven build 동작 테스트`() {
-        val sut = MavenManager("/Users/janghokim/apps/mvn/apache-maven-3.6.3")
-        sut.build(
-            mavenCommand = listOf("package"),
-            directory = "/Users/janghokim/Desktop/temp"
-        )
-    }
-
-    @Test
     fun `JAVA_HOME 설정 테스트`() {
         val file = File(javaClass.getResource("/static/sample-run.sh").file)
         val path = file.absolutePath

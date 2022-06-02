@@ -9,7 +9,7 @@ internal class GitManagerTest {
         val sut = GitManager("/usr/bin/git")
         sut.clone(
             gitRepository = "https://github.com/krifle/vtt-smi-converter.git",
-            directory = "/Users/janghokim/Desktop/temp/git"
+            directory = "/Users/janghokim/Desktop/temp/git/"
         )
     }
 }
