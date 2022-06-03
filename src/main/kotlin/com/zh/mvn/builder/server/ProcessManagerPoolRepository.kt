@@ -15,6 +15,14 @@ class ProcessManagerPoolRepository {
         return processManagerPool[id]
     }
 
+    fun findExpiredIds(): List<String> {
+        return processManagerPool.filterValues {
+            it.expired()
+        }.map {
+            it.key
+        }
+    }
+
     fun delete(id: String) {
         processManagerPool.remove(id)
     }

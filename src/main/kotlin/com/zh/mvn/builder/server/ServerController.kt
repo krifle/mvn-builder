@@ -43,7 +43,6 @@ class ServerController(
         val mavenHome = projectProperty.getMavenHomeList().first { it.version == mavenVersion }
         val processManager = ProcessManager(
             id = id,
-            pool = processManagerPoolRepository,
             javaHome = javaHome,
             mavenHome = mavenHome,
             source = source,

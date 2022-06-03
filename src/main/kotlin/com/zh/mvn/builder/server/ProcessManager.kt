@@ -3,6 +3,7 @@ package com.zh.mvn.builder.server
 import org.slf4j.LoggerFactory
 import java.io.PipedInputStream
 import java.io.PipedOutputStream
+import java.time.LocalDateTime
 
 class ProcessManager(
     private val id: String,
@@ -12,19 +13,22 @@ class ProcessManager(
     private val workingDir: String,
     val source: String,
     val branch: String,
-    val buildOpt: String,
-    private val pool: ProcessManagerPoolRepository
+    val buildOpt: String
 ) {
     companion object {
         private val logger = LoggerFactory.getLogger(ProcessManager::class.java)
         private const val terminateString = "507FDFDFCC99"
     }
 
+    var buildState: BuildState = BuildState.START
+
     private var occupied = false
 
     private val pipedOutputStream = PipedOutputStream()
     private val pipedInputStream = PipedInputStream(pipedOutputStream)
     private val outputBuffer = StringBuilder()
+
+    private val created = LocalDateTime.now()
 
     private val runThread = Thread {
         logger.info("[$id] Running thread start")
@@ -42,8 +46,6 @@ class ProcessManager(
         ).build()
 
         pipedOutputStream.write(terminateString.toByteArray())
-        occupied = false
-        pool.delete(id)
 
         logger.info("[$id] Running done")
     }
@@ -73,8 +75,19 @@ class ProcessManager(
             return
         }
 
-        runThread.start()
-        readOutputThread.start()
+        kotlin.runCatching {
+            buildState = BuildState.WORKING
+            runThread.start()
+            readOutputThread.start()
+        }
+        .onSuccess {
+            occupied = false
+            buildState = BuildState.DONE
+        }
+        .onFailure {
+            occupied = false
+            buildState = BuildState.ERROR
+        }
     }
 
     fun read(): String {
@@ -89,13 +102,18 @@ class ProcessManager(
         runThread.stop()
         readOutputThread.stop()
 
-        occupied = false
         pipedOutputStream.close()
         pipedInputStream.close()
         outputBuffer.clear()
 
-        pool.delete(id)
+        occupied = false
+        buildState = BuildState.STOPPED
 
         logger.info("[$id] Stopped")
+    }
+
+    fun expired(): Boolean {
+        val now = LocalDateTime.now()
+        return now.minusHours(10L).isBefore(created) // 10 hours..
     }
 }
