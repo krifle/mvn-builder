@@ -1,0 +1,62 @@
+spring:
+  profiles:
+    active: local,server
+
+---
+
+spring:
+  config:
+    activate:
+      on-profile: local
+app:
+  config:
+    java:
+      - version: 1.8
+        home: /Users/user/Library/Java/JavaVirtualMachines/azul-1.8.0_322/Contents/Home
+      - version: 11
+        home: /Users/user/Library/Java/JavaVirtualMachines/azul-11.0.14.1/Contents/Home
+      - version: 17
+        home: /Users/user/Library/Java/JavaVirtualMachines/azul-17.0.2/Contents/Home
+    maven:
+      - version: 3.6.3
+        home: /Users/user/apps/apache-maven-3.6.3
+    git: /usr/bin/git
+    home: /Users/user/Desktop/temp/mvn-builder
+
+---
+
+spring:
+  config:
+    activate:
+      on-profile: dev
+    java:
+      - version: 1.8
+        home: /Users/user/Library/Java/JavaVirtualMachines/azul-1.8.0_322/Contents/Home
+      - version: 11
+        home: /Users/user/Library/Java/JavaVirtualMachines/azul-11.0.14.1/Contents/Home
+      - version: 17
+        home: /Users/user/Library/Java/JavaVirtualMachines/azul-17.0.2/Contents/Home
+    maven:
+      - version: 3.6.3
+        home: /Users/user/apps/apache-maven-3.6.3
+    git: /usr/bin/git
+    home: /Users/user/Desktop/temp
+
+---
+
+spring:
+  config:
+    activate:
+      on-profile: real
+    java:
+      - version: 1.8
+        home: /Users/user/Library/Java/JavaVirtualMachines/azul-1.8.0_322/Contents/Home
+      - version: 11
+        home: /Users/user/Library/Java/JavaVirtualMachines/azul-11.0.14.1/Contents/Home
+      - version: 17
+        home: /Users/user/Library/Java/JavaVirtualMachines/azul-17.0.2/Contents/Home
+    maven:
+      - version: 3.6.3
+        home: /Users/user/apps/apache-maven-3.6.3
+    git: /usr/bin/git
+    home: /Users/user/Desktop/temp

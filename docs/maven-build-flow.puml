@@ -1,0 +1,22 @@
+@startuml
+autonumber
+
+Client -> Server: info
+Server -> Client: info
+
+Client -> Server: handshake \n(javaVersion, mavenVersion, \ngit repo, build opt)
+Server -> Client: token
+
+Server -> Git: clone
+Git -> Server: source
+
+Server -> Client: token, port
+Client -> Server: TCP(port)
+Server -> Server: Build maven start
+Server -> Client: process log
+Server -> Server: Build completed
+Server -> Client: Terminate String with download url
+Server -> Server: Socket close
+Client -> Client: Socket close
+
+@enduml
