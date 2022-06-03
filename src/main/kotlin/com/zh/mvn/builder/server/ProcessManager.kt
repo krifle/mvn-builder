@@ -6,7 +6,7 @@ import java.io.PipedOutputStream
 import java.time.LocalDateTime
 
 class ProcessManager(
-    private val id: String,
+    val id: String,
     private val javaHome: JavaHome,
     private val mavenHome: MavenHome,
     private val gitHome: String,
@@ -28,26 +28,37 @@ class ProcessManager(
     private val pipedInputStream = PipedInputStream(pipedOutputStream)
     private val outputBuffer = StringBuilder()
 
-    private val created = LocalDateTime.now()
+    val created: LocalDateTime = LocalDateTime.now()
 
     private val runThread = Thread {
-        logger.info("[$id] Running thread start")
+        kotlin.runCatching {
+            logger.info("[$id] Running thread start")
 
-        MavenBuilder(
-            id = id,
-            workingDir = workingDir,
-            javaHome = javaHome,
-            mavenHome = mavenHome,
-            gitHome = gitHome,
-            source = source,
-            branch = branch,
-            buildOpt = buildOpt,
-            outputStream = pipedOutputStream
-        ).build()
+            MavenBuilder(
+                id = id,
+                workingDir = workingDir,
+                javaHome = javaHome,
+                mavenHome = mavenHome,
+                gitHome = gitHome,
+                source = source,
+                branch = branch,
+                buildOpt = buildOpt,
+                outputStream = pipedOutputStream
+            ).build()
 
-        pipedOutputStream.write(terminateString.toByteArray())
+            pipedOutputStream.write(terminateString.toByteArray())
 
-        logger.info("[$id] Running done")
+            logger.info("[$id] Running done")
+        }
+        .onSuccess {
+            occupied = false
+            buildState = BuildState.DONE
+        }
+        .onFailure {
+            occupied = false
+            buildState = BuildState.ERROR
+        }
+
     }
 
     private val readOutputThread = Thread {
@@ -57,8 +68,9 @@ class ProcessManager(
             Thread.sleep(1000L)
 
             val byteArray = ByteArray(1024 * 1024)
+
             pipedInputStream.read(byteArray)
-            val readString = String(byteArray)
+            val readString = String(byteArray).replace("\u0000", "")
 
             outputBuffer.append(readString)
 
@@ -69,28 +81,19 @@ class ProcessManager(
         logger.info("[$id] Reading done.")
     }
 
+
     fun start() {
         if (occupied) {
             logger.info("[$id] Already occupied. Terminating..")
             return
         }
 
-        kotlin.runCatching {
-            buildState = BuildState.WORKING
-            runThread.start()
-            readOutputThread.start()
-        }
-        .onSuccess {
-            occupied = false
-            buildState = BuildState.DONE
-        }
-        .onFailure {
-            occupied = false
-            buildState = BuildState.ERROR
-        }
+        buildState = BuildState.WORKING
+        runThread.start()
+        readOutputThread.start()
     }
 
-    fun read(): String {
+    fun readOutputBuffer(): String {
         val bufferRead = outputBuffer.toString()
         outputBuffer.clear()
         return bufferRead
