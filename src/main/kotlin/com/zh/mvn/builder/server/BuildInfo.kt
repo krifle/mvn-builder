@@ -21,7 +21,7 @@ data class BuildInfo(
                 source = processManager.source,
                 buildOpt = processManager.buildOpt,
                 outputBuffer = processManager.readOutputBuffer(),
-                resultUrl = "" // TODO
+                resultUrl = processManager.uploadedUrl
             )
         }
 

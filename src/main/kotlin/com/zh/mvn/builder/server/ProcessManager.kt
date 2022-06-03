@@ -24,6 +24,7 @@ class ProcessManager(
     }
 
     var buildState: BuildState = BuildState.START
+    var uploadedUrl = ""
 
     private var occupied = false
 
@@ -49,11 +50,11 @@ class ProcessManager(
                 outputStream = pipedOutputStream
             ).build()
 
-            ResultUploader(
+            uploadedUrl = ResultUploader(
                 uploadFile = File("$workingDir/$id/$targetPath"),
                 workingDir = workingDir,
                 id = id,
-                url = "$uploadUrl/$id.zip",
+                uploadUrl = "$uploadUrl/$id.zip",
                 outputStream = pipedOutputStream
             ).upload()
 
