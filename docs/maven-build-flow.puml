@@ -1,22 +1,23 @@
 @startuml
 autonumber
 
-Client -> Server: info
-Server -> Client: info
+Client -> Server: /info
+Server -> Client: InfoResponse
 
-Client -> Server: handshake \n(javaVersion, mavenVersion, \ngit repo, build opt)
-Server -> Client: token
+Client -> Server: /start
+Server -> Client: BuildInfo
+
+Client -> Server: /check frequently
+Server -> Client: BuildInfo
 
 Server -> Git: clone
 Git -> Server: source
 
-Server -> Client: token, port
-Client -> Server: TCP(port)
-Server -> Server: Build maven start
-Server -> Client: process log
-Server -> Server: Build completed
-Server -> Client: Terminate String with download url
-Server -> Server: Socket close
-Client -> Client: Socket close
+Server -> Server: Build maven
+Server -> Server: Zip result
 
+Server -> UploadUrl: upload
+
+Client -> Server: /check
+Server -> Client: BuildInfo
 @enduml
