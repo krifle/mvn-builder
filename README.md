@@ -107,6 +107,57 @@ You can force stop the build process of given `id`.
 http://localhost:8080/stop?id=6cd655f6-803c-42d6-a219-2768895716d7
 ```
 
+## Flow
+Following is the example flow between server and client
+```
+     ,------.             ,------.            ,---.          ,---------.
+     |Client|             |Server|            |Git|          |UploadUrl|
+     `--+---'             `--+---'            `-+-'          `----+----'
+        |       1 /info      |                  |                 |     
+        | ------------------->                  |                 |     
+        |                    |                  |                 |     
+        |   2 InfoResponse   |                  |                 |     
+        | <-------------------                  |                 |     
+        |                    |                  |                 |     
+        |      3 /start      |                  |                 |     
+        | ------------------->                  |                 |     
+        |                    |                  |                 |     
+        |     4 BuildInfo    |                  |                 |     
+        | <-------------------                  |                 |     
+        |                    |                  |                 |     
+        | 5 /check frequently|                  |                 |     
+        | ------------------->                  |                 |     
+        |                    |                  |                 |     
+        |     6 BuildInfo    |                  |                 |     
+        | <-------------------                  |                 |     
+        |                    |                  |                 |     
+        |                    |      7 clone     |                 |     
+        |                    | ----------------->                 |     
+        |                    |                  |                 |     
+        |                    |     8 source     |                 |     
+        |                    | <-----------------                 |     
+        |                    |                  |                 |     
+        |                    |----.                               |     
+        |                    |    | 9 Build maven                 |     
+        |                    |<---'                               |     
+        |                    |                  |                 |     
+        |                    |----.                               |     
+        |                    |    | 10 Zip result                 |     
+        |                    |<---'                               |     
+        |                    |                  |                 |     
+        |                    |              11 upload             |     
+        |                    | ----------------------------------->     
+        |                    |                  |                 |     
+        |      12 /check     |                  |                 |     
+        | ------------------->                  |                 |     
+        |                    |                  |                 |     
+        |    13 BuildInfo    |                  |                 |     
+        | <-------------------                  |                 |     
+     ,--+---.             ,--+---.            ,-+-.          ,----+----.
+     |Client|             |Server|            |Git|          |UploadUrl|
+     `------'             `------'            `---'          `---------'
+```
+
 ## Client example
 Sample client is provided on `/src/main/client/builder.jar`.
 
