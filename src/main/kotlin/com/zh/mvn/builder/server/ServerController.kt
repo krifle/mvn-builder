@@ -28,7 +28,7 @@ class ServerController(
         @RequestParam source: String,
         @RequestParam branch: String,
         @RequestParam buildOpt: String,
-        @RequestParam targetDir: String
+        @RequestParam targetPath: String
     ): BuildInfo {
         val id = UUID.randomUUID().toString()
         val javaHome = projectProperty.getJavaHomeList().first { it.version == javaVersion }
@@ -40,10 +40,10 @@ class ServerController(
             source = source,
             branch = branch,
             buildOpt = buildOpt,
-            gitHome = projectProperty.git!!,
-            workingDir = projectProperty.home!!,
-            targetDir = targetDir,
-            uploadUrl = projectProperty.uploadUrl!!
+            gitHome = projectProperty.git,
+            workingDir = projectProperty.home,
+            targetPath = targetPath,
+            uploadUrl = projectProperty.uploadUrl
         )
 
         processManagerPoolRepository.put(id, processManager)

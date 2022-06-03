@@ -12,7 +12,7 @@ class ProcessManager(
     private val mavenHome: MavenHome,
     private val gitHome: String,
     private val workingDir: String,
-    private val targetDir: String,
+    private val targetPath: String,
     val source: String,
     val branch: String,
     val buildOpt: String,
@@ -50,10 +50,12 @@ class ProcessManager(
             ).build()
 
             ResultUploader(
-                uploadDir = File("$workingDir/$targetDir"),
+                uploadFile = File("$workingDir/$id/$targetPath"),
+                workingDir = workingDir,
+                id = id,
                 url = "$uploadUrl/$id.zip",
                 outputStream = pipedOutputStream
-            )
+            ).upload()
 
             pipedOutputStream.write(terminateString.toByteArray())
 
