@@ -107,6 +107,17 @@ You can force stop the build process of given `id`.
 http://localhost:8080/stop?id=6cd655f6-803c-42d6-a219-2768895716d7
 ```
 
+## Client example
+Sample client is provided on `/src/main/client/builder.jar`.
+
+```bash
+java -jar builder.jar \
+    'http://localhost:8080' \
+    'https://github.com/krifle/mvn-builder' \
+    'master' \
+    'clean package -DskipTests' \
+    'target/mvn-builder-0.0.1-SNAPSHOT.jar'
+```
 
 ## etc.
 ### Upload Step

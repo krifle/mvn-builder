@@ -1,13 +1,13 @@
+import requests
+import sys
 import time
 
-import requests
-
-url = "http://localhost:8080"
+url = sys.argv[1]
 parameters = {
-  'source': 'https://github.com/krifle/mvn-builder',
-  'branch': 'master',
-  'buildOpt': 'clean package -DskipTests',
-  'targetPath': 'target/mvn-builder-0.0.1-SNAPSHOT.jar'
+  'source': sys.argv[2],
+  'branch': sys.argv[3],
+  'buildOpt': sys.argv[4],
+  'targetPath': sys.argv[5]
 }
 
 print(url + "/start")
@@ -28,7 +28,6 @@ while 1:
     downloadUrl = checkInfo["resultUrl"]
     break
   if checkInfo["state"] == "STOPPED" or checkInfo["state"] == "ERROR":
-    print("ERROR or STOPPED")
     break
 
 if downloadUrl != "":

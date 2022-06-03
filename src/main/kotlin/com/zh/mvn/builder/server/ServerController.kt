@@ -3,6 +3,7 @@ package com.zh.mvn.builder.server
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
+import java.sql.Timestamp
 import java.time.LocalDateTime
 import java.util.*
 
@@ -51,7 +52,7 @@ class ServerController(
 
         return BuildInfo(
             id = id,
-            created = LocalDateTime.now(),
+            created = Timestamp.valueOf(LocalDateTime.now()).time,
             state = BuildState.START,
             source = source,
             buildOpt = buildOpt,

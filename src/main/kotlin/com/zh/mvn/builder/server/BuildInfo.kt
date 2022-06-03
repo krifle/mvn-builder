@@ -1,10 +1,11 @@
 package com.zh.mvn.builder.server
 
+import java.sql.Timestamp
 import java.time.LocalDateTime
 
 data class BuildInfo(
     val id: String,
-    val created: LocalDateTime,
+    val created: Long,
     val state: BuildState,
     val source: String,
     val buildOpt: String,
@@ -16,7 +17,7 @@ data class BuildInfo(
         fun of(processManager: ProcessManager): BuildInfo {
             return BuildInfo(
                 id = processManager.id,
-                created = processManager.created,
+                created = Timestamp.valueOf(processManager.created).time,
                 state = processManager.buildState,
                 source = processManager.source,
                 buildOpt = processManager.buildOpt,
@@ -28,7 +29,7 @@ data class BuildInfo(
         fun ofError(errorMessage: String): BuildInfo {
             return BuildInfo(
                 id = "",
-                created = LocalDateTime.now(),
+                created = Timestamp.valueOf(LocalDateTime.now()).time,
                 state = BuildState.ERROR,
                 source = "",
                 buildOpt = "",
