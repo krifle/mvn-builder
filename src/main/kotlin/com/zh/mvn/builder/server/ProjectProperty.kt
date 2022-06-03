@@ -6,21 +6,16 @@ import org.springframework.context.annotation.Configuration
 
 @Configuration
 @ConfigurationProperties(prefix = "app.config")
-class ProjectProperty {
-
-    var java: List<Map<String, String>>? = null
-
-    var maven: List<Map<String, String>>? = null
-
-    var git: String? = null
-
-    var home: String? = null
+data class ProjectProperty(
+    val java: List<Map<String, String>>,
+    val maven: List<Map<String, String>>
+) {
+    var git: String = ""
+    var home: String = ""
+    var uploadUrl: String = ""
 
     fun getJavaHomeList(): List<JavaHome> {
-        if (java == null) {
-            throw ServerInitializationException("app.config.java property is not initialized")
-        }
-        return java!!.map {
+        return java.map {
             val version = it.get("version")
             val home = it.get("home")
             if (version == null) {
@@ -34,10 +29,7 @@ class ProjectProperty {
     }
 
     fun getMavenHomeList(): List<MavenHome> {
-        if (maven == null) {
-            throw ServerInitializationException("app.config.maven property is not initialized")
-        }
-        return maven!!.map {
+        return maven.map {
             val version = it.get("version")
             val home = it.get("home")
             if (version == null) {

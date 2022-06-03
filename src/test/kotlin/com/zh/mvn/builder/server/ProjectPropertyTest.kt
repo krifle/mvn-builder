@@ -17,5 +17,8 @@ internal class ProjectPropertyTest {
         println("/////////")
         println(projectProperty.java)
         println(projectProperty.maven)
+        println(projectProperty.git)
+        println(projectProperty.home)
+        println(projectProperty.uploadUrl)
     }
 }

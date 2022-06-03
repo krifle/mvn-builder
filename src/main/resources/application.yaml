@@ -22,6 +22,7 @@ app:
         home: /Users/user/apps/apache-maven-3.6.3
     git: /usr/bin/git
     home: /Users/user/Desktop/temp/mvn-builder
+    uploadUrl: 10.10.10.10:8080
 
 ---
 
@@ -41,6 +42,7 @@ spring:
         home: /Users/user/apps/apache-maven-3.6.3
     git: /usr/bin/git
     home: /Users/user/Desktop/temp
+    uploadUrl: 10.10.10.10:8080
 
 ---
 
@@ -60,3 +62,4 @@ spring:
         home: /Users/user/apps/apache-maven-3.6.3
     git: /usr/bin/git
     home: /Users/user/Desktop/temp
+    uploadUrl: 10.10.10.10:8080
