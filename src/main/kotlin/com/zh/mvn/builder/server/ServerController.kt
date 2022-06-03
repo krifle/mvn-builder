@@ -27,7 +27,8 @@ class ServerController(
         @RequestParam(required = false, defaultValue = "3.6.3") mavenVersion: String,
         @RequestParam source: String,
         @RequestParam branch: String,
-        @RequestParam buildOpt: String
+        @RequestParam buildOpt: String,
+        @RequestParam targetDir: String
     ): BuildInfo {
         val id = UUID.randomUUID().toString()
         val javaHome = projectProperty.getJavaHomeList().first { it.version == javaVersion }
@@ -40,7 +41,9 @@ class ServerController(
             branch = branch,
             buildOpt = buildOpt,
             gitHome = projectProperty.git!!,
-            workingDir = projectProperty.home!!
+            workingDir = projectProperty.home!!,
+            targetDir = targetDir,
+            uploadUrl = projectProperty.uploadUrl!!
         )
 
         processManagerPoolRepository.put(id, processManager)
@@ -53,7 +56,7 @@ class ServerController(
             source = source,
             buildOpt = buildOpt,
             outputBuffer = "",
-            resultOutput = ""
+            resultUrl = ""
         )
     }
 

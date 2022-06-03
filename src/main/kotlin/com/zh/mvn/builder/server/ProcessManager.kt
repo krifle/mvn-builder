@@ -1,6 +1,7 @@
 package com.zh.mvn.builder.server
 
 import org.slf4j.LoggerFactory
+import java.io.File
 import java.io.PipedInputStream
 import java.io.PipedOutputStream
 import java.time.LocalDateTime
@@ -11,9 +12,11 @@ class ProcessManager(
     private val mavenHome: MavenHome,
     private val gitHome: String,
     private val workingDir: String,
+    private val targetDir: String,
     val source: String,
     val branch: String,
-    val buildOpt: String
+    val buildOpt: String,
+    private val uploadUrl: String
 ) {
     companion object {
         private val logger = LoggerFactory.getLogger(ProcessManager::class.java)
@@ -45,6 +48,12 @@ class ProcessManager(
                 buildOpt = buildOpt,
                 outputStream = pipedOutputStream
             ).build()
+
+            ResultUploader(
+                uploadDir = File("$workingDir/$targetDir"),
+                url = "$uploadUrl/$id.zip",
+                outputStream = pipedOutputStream
+            )
 
             pipedOutputStream.write(terminateString.toByteArray())
 

@@ -16,6 +16,8 @@ class ProjectProperty {
 
     var home: String? = null
 
+    var uploadUrl: String? = null
+
     fun getJavaHomeList(): List<JavaHome> {
         if (java == null) {
             throw ServerInitializationException("app.config.java property is not initialized")

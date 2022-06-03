@@ -9,7 +9,7 @@ data class BuildInfo(
     val source: String,
     val buildOpt: String,
     val outputBuffer: String,
-    val resultOutput: String
+    val resultUrl: String
 ) {
 
     companion object {
@@ -21,7 +21,7 @@ data class BuildInfo(
                 source = processManager.source,
                 buildOpt = processManager.buildOpt,
                 outputBuffer = processManager.readOutputBuffer(),
-                resultOutput = "" // TODO
+                resultUrl = "" // TODO
             )
         }
 
@@ -33,7 +33,7 @@ data class BuildInfo(
                 source = "",
                 buildOpt = "",
                 outputBuffer = errorMessage,
-                resultOutput = ""
+                resultUrl = ""
             )
         }
     }
