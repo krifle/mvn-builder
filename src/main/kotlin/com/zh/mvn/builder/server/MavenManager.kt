@@ -3,43 +3,52 @@ package com.zh.mvn.builder.server
 import org.slf4j.LoggerFactory
 import org.zeroturnaround.exec.ProcessExecutor
 import org.zeroturnaround.exec.stream.slf4j.Slf4jInfoOutputStream
-import java.io.DataOutputStream
 import java.io.File
+import java.io.PipedOutputStream
 
 class MavenManager(
-    private val token: String,
     private val javaHome: JavaHome,
     private val mavenHome: MavenHome,
     private val workingPath: String,
     private val buildOpt: String,
-    private val outputStream: DataOutputStream
-): Thread() {
+    private val outputStream: PipedOutputStream
+) {
 
     companion object {
         private val logger = LoggerFactory.getLogger(MavenManager::class.java)
+        private const val terminateString = "972A0C59E2F0"
     }
 
-    override fun run() {
-        val mavenBuildScript = File(javaClass.getResource("/static/maven-builder.sh").file)
-        val mavenBuildScriptPath = mavenBuildScript.absolutePath!!
+    fun build() {
+        checkPomFile()
+
         val command = listOf(
-            "sh",
-            mavenBuildScriptPath,
-            javaHome.home,
-            mavenHome.home,
-            workingPath
+            "${mavenHome.home}/bin/mvn",
+            "-f", "$workingPath/pom.xml"
         )
         val buildOptList = buildOpt.split(" ")
+
+        logger.info("start")
+
+        outputStream.write((command + buildOptList).joinToString(" ").toByteArray())
 
         ProcessExecutor()
             .command(command + buildOptList)
             .redirectOutput(Slf4jInfoOutputStream(logger))
             .redirectOutputAlsoTo(outputStream)
+            .redirectErrorAlsoTo(outputStream)
+            .environment("JAVA_HOME", javaHome.home)
             .destroyOnExit()
             .execute()
+            .exitValue
 
-        outputStream.writeUTF(token)
-        outputStream.flush()
-        outputStream.close()
+        outputStream.write(terminateString.toByteArray())
+    }
+
+    private fun checkPomFile() {
+        val pomFile = File("$workingPath/pom.xml")
+        if (!pomFile.exists()) {
+            throw IllegalStateException("pom.xml does not exists. check your directory $workingPath/pom.xml")
+        }
     }
 }

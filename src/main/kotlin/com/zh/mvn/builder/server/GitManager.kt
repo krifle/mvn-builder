@@ -3,38 +3,47 @@ package com.zh.mvn.builder.server
 import org.apache.commons.io.FileUtils
 import org.slf4j.LoggerFactory
 import org.zeroturnaround.exec.ProcessExecutor
+import org.zeroturnaround.exec.stream.slf4j.Slf4jInfoOutputStream
 import java.io.File
+import java.io.PipedOutputStream
 
 class GitManager(
-    private val gitPath: String
+    private val gitPath: String,
+    private val gitRepository: String,
+    private val gitBranch: String,
+    private val directory: String,
+    private val outputStream: PipedOutputStream
 ) {
 
     companion object {
         private val logger = LoggerFactory.getLogger(GitManager::class.java)
+        private const val terminateString = "FFA01D819D7F"
     }
 
-    fun clone(
-        gitRepository: String,
-        directory: String
-    ) {
-        logger.info("Removing old directory..")
+    fun clone() {
         FileUtils.deleteDirectory(File(directory))
         Thread.sleep(1000L)
-        logger.info("Old directory removed.")
 
         val command = listOf(
             gitPath,
-            "clone", gitRepository,
+            "clone",
+            "-b", gitBranch, "--single-branch",
+            gitRepository,
             directory
         )
-        logger.info(command.joinToString(" "))
-        val result = ProcessExecutor()
-            .readOutput(true)
+
+        val gitCommand = command.joinToString(" ")
+        logger.info(gitCommand)
+        outputStream.write(gitCommand.toByteArray())
+
+        ProcessExecutor()
             .command(command)
-            .exitValueNormal()
+            .redirectOutput(Slf4jInfoOutputStream(logger))
+            .redirectOutputAlsoTo(outputStream)
+            .redirectErrorAlsoTo(outputStream)
             .destroyOnExit()
             .executeNoTimeout()
-            .outputUTF8()
-        logger.info(result)
+
+        outputStream.write(terminateString.toByteArray())
     }
 }

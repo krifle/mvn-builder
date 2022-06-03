@@ -11,39 +11,17 @@ spring:
 app:
   config:
     java:
-      - version: 8
-        home: /Users/janghokim/Library/Java/JavaVirtualMachines/azul-1.8.0_302/Contents/Home
+      - version: 1.8
+        home: /Users/user/Library/Java/JavaVirtualMachines/azul-1.8.0_322/Contents/Home
       - version: 11
-        home: /Users/janghokim/Library/Java/JavaVirtualMachines/azul-11.0.11/Contents/Home
-      - version: 13
-        home: /Users/janghokim/Library/Java/JavaVirtualMachines/azul-13.0.6/Contents/Home
-      - version: 14
-        home: /Users/janghokim/Library/Java/JavaVirtualMachines/azul-14.0.2/Contents/Home
-      - version: 15
-        home: /Users/janghokim/Library/Java/JavaVirtualMachines/azul-15.0.5/Contents/Home
-      - version: 16
-        home: /Users/janghokim/Library/Java/JavaVirtualMachines/azul-16.0.2/Contents/Home
+        home: /Users/user/Library/Java/JavaVirtualMachines/azul-11.0.14.1/Contents/Home
       - version: 17
-        home: /Users/janghokim/Library/Java/JavaVirtualMachines/azul-17.0.1/Contents/Home
-      - version: 18
-        home: /Users/janghokim/Library/Java/JavaVirtualMachines/azul-18/Contents/Home
+        home: /Users/user/Library/Java/JavaVirtualMachines/azul-17.0.2/Contents/Home
     maven:
-      - version: 3.0.5
-        home: /Users/janghokim/apps/mvn/apache-maven-3.0.5
-      - version: 3.1.1
-        home: /Users/janghokim/apps/mvn/apache-maven-3.1.1
-      - version: 3.2.5
-        home: /Users/janghokim/apps/mvn/apache-maven-3.2.5
-      - version: 3.3.9
-        home: /Users/janghokim/apps/mvn/apache-maven-3.3.9
-      - version: 3.5.4
-        home: /Users/janghokim/apps/mvn/apache-maven-3.5.4
       - version: 3.6.3
-        home: /Users/janghokim/apps/mvn/apache-maven-3.6.3
-      - version: 3.8.5
-        home: /Users/janghokim/apps/mvn/apache-maven-3.8.5
+        home: /Users/user/apps/apache-maven-3.6.3
     git: /usr/bin/git
-    home: /Users/janghokim/Desktop/temp/
+    home: /Users/user/Desktop/temp/mvn-builder
 
 ---
 
@@ -52,39 +30,17 @@ spring:
     activate:
       on-profile: dev
     java:
-      - version: 8
-        home: /Users/janghokim/Library/Java/JavaVirtualMachines/azul-1.8.0_302/Contents/Home
+      - version: 1.8
+        home: /Users/user/Library/Java/JavaVirtualMachines/azul-1.8.0_322/Contents/Home
       - version: 11
-        home: /Users/janghokim/Library/Java/JavaVirtualMachines/azul-11.0.11/Contents/Home
-      - version: 13
-        home: /Users/janghokim/Library/Java/JavaVirtualMachines/azul-13.0.6/Contents/Home
-      - version: 14
-        home: /Users/janghokim/Library/Java/JavaVirtualMachines/azul-14.0.2/Contents/Home
-      - version: 15
-        home: /Users/janghokim/Library/Java/JavaVirtualMachines/azul-15.0.5/Contents/Home
-      - version: 16
-        home: /Users/janghokim/Library/Java/JavaVirtualMachines/azul-16.0.2/Contents/Home
+        home: /Users/user/Library/Java/JavaVirtualMachines/azul-11.0.14.1/Contents/Home
       - version: 17
-        home: /Users/janghokim/Library/Java/JavaVirtualMachines/azul-17.0.1/Contents/Home
-      - version: 18
-        home: /Users/janghokim/Library/Java/JavaVirtualMachines/azul-18/Contents/Home
+        home: /Users/user/Library/Java/JavaVirtualMachines/azul-17.0.2/Contents/Home
     maven:
-      - version: 3.0.5
-        home: /Users/janghokim/apps/mvn/apache-maven-3.0.5
-      - version: 3.1.1
-        home: /Users/janghokim/apps/mvn/apache-maven-3.1.1
-      - version: 3.2.5
-        home: /Users/janghokim/apps/mvn/apache-maven-3.2.5
-      - version: 3.3.9
-        home: /Users/janghokim/apps/mvn/apache-maven-3.3.9
-      - version: 3.5.4
-        home: /Users/janghokim/apps/mvn/apache-maven-3.5.4
       - version: 3.6.3
-        home: /Users/janghokim/apps/mvn/apache-maven-3.6.3
-      - version: 3.8.5
-        home: /Users/janghokim/apps/mvn/apache-maven-3.8.5
+        home: /Users/user/apps/apache-maven-3.6.3
     git: /usr/bin/git
-    home: /Users/janghokim/Desktop/temp
+    home: /Users/user/Desktop/temp
 
 ---
 
@@ -93,36 +49,14 @@ spring:
     activate:
       on-profile: real
     java:
-      - version: 8
-        home: /Users/janghokim/Library/Java/JavaVirtualMachines/azul-1.8.0_302/Contents/Home
+      - version: 1.8
+        home: /Users/user/Library/Java/JavaVirtualMachines/azul-1.8.0_322/Contents/Home
       - version: 11
-        home: /Users/janghokim/Library/Java/JavaVirtualMachines/azul-11.0.11/Contents/Home
-      - version: 13
-        home: /Users/janghokim/Library/Java/JavaVirtualMachines/azul-13.0.6/Contents/Home
-      - version: 14
-        home: /Users/janghokim/Library/Java/JavaVirtualMachines/azul-14.0.2/Contents/Home
-      - version: 15
-        home: /Users/janghokim/Library/Java/JavaVirtualMachines/azul-15.0.5/Contents/Home
-      - version: 16
-        home: /Users/janghokim/Library/Java/JavaVirtualMachines/azul-16.0.2/Contents/Home
+        home: /Users/user/Library/Java/JavaVirtualMachines/azul-11.0.14.1/Contents/Home
       - version: 17
-        home: /Users/janghokim/Library/Java/JavaVirtualMachines/azul-17.0.1/Contents/Home
-      - version: 18
-        home: /Users/janghokim/Library/Java/JavaVirtualMachines/azul-18/Contents/Home
+        home: /Users/user/Library/Java/JavaVirtualMachines/azul-17.0.2/Contents/Home
     maven:
-      - version: 3.0.5
-        home: /Users/janghokim/apps/mvn/apache-maven-3.0.5
-      - version: 3.1.1
-        home: /Users/janghokim/apps/mvn/apache-maven-3.1.1
-      - version: 3.2.5
-        home: /Users/janghokim/apps/mvn/apache-maven-3.2.5
-      - version: 3.3.9
-        home: /Users/janghokim/apps/mvn/apache-maven-3.3.9
-      - version: 3.5.4
-        home: /Users/janghokim/apps/mvn/apache-maven-3.5.4
       - version: 3.6.3
-        home: /Users/janghokim/apps/mvn/apache-maven-3.6.3
-      - version: 3.8.5
-        home: /Users/janghokim/apps/mvn/apache-maven-3.8.5
+        home: /Users/user/apps/apache-maven-3.6.3
     git: /usr/bin/git
-    home: /Users/janghokim/Desktop/temp
+    home: /Users/user/Desktop/temp

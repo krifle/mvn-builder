@@ -2,7 +2,6 @@ package com.zh.mvn.builder.server
 
 import com.zh.mvn.builder.exception.ServerInitializationException
 import org.slf4j.LoggerFactory
-import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.context.annotation.Profile
 import org.springframework.stereotype.Component
 import java.io.File
@@ -10,14 +9,13 @@ import javax.annotation.PostConstruct
 
 @Component
 @Profile("server")
-class ServerInitializer {
+class ServerInitializer(
+    private val projectProperty: ProjectProperty
+) {
 
     companion object {
         private val logger = LoggerFactory.getLogger(ServerInitializer::class.java)
     }
-
-    @Autowired
-    private lateinit var projectProperty: ProjectProperty
 
     private lateinit var javaHomeList: List<JavaHome>
     private lateinit var mavenHomeList: List<MavenHome>

@@ -4,14 +4,10 @@ import java.io.DataOutputStream
 import java.net.Socket
 
 class MessageWriter(
-    private val socket: Socket
+    socket: Socket
 ) : Thread() {
 
-    private lateinit var dataOutputStream: DataOutputStream
-
-    init {
-        dataOutputStream = DataOutputStream(socket.getOutputStream())
-    }
+    private var dataOutputStream: DataOutputStream = DataOutputStream(socket.getOutputStream())
 
     override fun run() {
         super.run()
